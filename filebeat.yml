@@ -1,0 +1,21 @@
+############################# Filebeat #####################################
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/nginx/access.log
+      fields:
+        logzio_codec: plain
+        token: dSAxWJNhBTTFjdoStCKNuQgxSEUKRCJA
+      fields_under_root: true
+      ignore_older: 3h
+      document_type: nginx
+  registry_file: /var/lib/filebeat/registry
+############################# Output ##########################################
+output:
+  logstash:
+    hosts: ["listener.logz.io:5015"]
+    tls:
+      certificate_authorities: ['/etc/pki/tls/certs/COMODORSADomainValidationSecureServerCA.crt']
+    ssl:
+      certificate_authorities: ['/etc/pki/tls/certs/COMODORSADomainValidationSecureServerCA.crt']
